@@ -26,7 +26,7 @@ class TaskModelForm(forms.ModelForm):
                     "placeholder": "Введите название задачи",
                 }
             ),
-            "user_name": forms.TextInput(
+            "user_name": forms.Select(
                 attrs={
                     "class": "form-control",
                     "placeholder": "Введите имя пользователя",
