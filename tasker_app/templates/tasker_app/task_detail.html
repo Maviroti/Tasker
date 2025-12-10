@@ -1,0 +1,16 @@
+{% extends "tasker_app/base.html" %}
+
+
+{% block content %}
+<div class="card msolocard">
+    <div class="card-header">
+        {{ task.title }}
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">{{ task.user_name }}</li>
+        <li class="list-group-item">{{ task.body }}</li>
+        <li class="list-group-item">{{ task.end_date }}</li>
+    </ul>
+</div>
+
+{% endblock %}
