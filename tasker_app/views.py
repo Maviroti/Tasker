@@ -1,38 +1,63 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+    TemplateView,
+)
 from django.contrib import messages
 
 from tasker_app.forms import TaskModelForm
 from tasker_app.models import Task
 
 
-def index(request):
-    """Главная страница"""
-    tasks = Task.objects.all()
-    context = {
-        "active_page": "index",
-        "tasks": tasks,
-    }
-    return render(request, "tasker_app/index.html", context=context)
+class IndexTemplateView(TemplateView):
+    """Представление главной страницы"""
+
+    template_name = "tasker_app/index.html"
+
+    def get_context_data(self, **kwargs):
+        tasks = Task.objects.all()
+        context = super().get_context_data(**kwargs)
+        context["active_page"] = "index"
+        context["tasks"] = tasks
+        return context
 
 
-def about(request):
-    """Выводим страницу about"""
-    context = {
-        "active_page": "about",
-    }
-    return render(request, "tasker_app/about.html", context=context)
+class AboutTemplateView(TemplateView):
+    """Представление страницы about"""
+
+    template_name = "tasker_app/about.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["active_page"] = "about"
+        return context
 
 
-def today(request):
-    """Выводим список задач у которых сегодня последний день"""
-    today_tasks = Task.get_by_date()
-    context = {
-        "active_page": "today",
-        "tasks": today_tasks,
-    }
-    return render(request, "tasker_app/index.html", context=context)
+class TodayTemplateView(TemplateView):
+    """Представление страницы today"""
+
+    template_name = "tasker_app/index.html"
+
+    def get_context_data(self, **kwargs):
+        today_tasks = Task.get_by_date()
+        context = super().get_context_data(**kwargs)
+        context["active_page"] = "today"
+        context["tasks"] = today_tasks
+        return context
+
+
+# def today(request):
+#     """Выводим список задач у которых сегодня последний день"""
+#     today_tasks = Task.get_by_date()
+#     context = {
+#         "active_page": "today",
+#         "tasks": today_tasks,
+#     }
+#     return render(request, "tasker_app/index.html", context=context)
 
 
 class TaskCreateView(CreateView):
