@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
+from django.contrib import messages
 
 from tasker_app.forms import TaskModelForm
 from tasker_app.models import Task
@@ -43,6 +44,11 @@ class TaskCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy("task_detail", kwargs={"pk": self.object.pk})  # type: ignore
+
+    def form_valid(self, form):
+        """Добавляем сообщение об успешном создании задачи."""
+        messages.success(self.request, "Пост успешно создан")
+        return super().form_valid(form)
 
 
 class TaskDetailView(DetailView):

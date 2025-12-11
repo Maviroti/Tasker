@@ -1,5 +1,6 @@
 from django import forms
 from tasker_app.models import Task
+from django.core.exceptions import ValidationError
 
 
 class TaskModelForm(forms.ModelForm):
@@ -58,3 +59,12 @@ class TaskModelForm(forms.ModelForm):
                     field.widget.attrs["data-original"] = value.strftime("%Y-%m-%d")
                 elif value:
                     field.widget.attrs["data-original"] = str(value)
+
+    def clean_title(self):
+        """Валидация title на количество слов"""
+        title: str = str(self.cleaned_data.get("title"))
+        words_list = title.split()
+        print(f"validation: {words_list}")
+        if len(words_list) < 2:
+            raise ValidationError("Название должно содержать минимум 2 слова")
+        return title

@@ -10,6 +10,14 @@
                 {{ field.label }}
             </label>
             {{ field }}
+
+            {% if field.errors %}
+            <div class="invalid-feedback d-block">
+                {% for error in field.errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
         <button type="submit" class="btn btn-primary">Создать</button>

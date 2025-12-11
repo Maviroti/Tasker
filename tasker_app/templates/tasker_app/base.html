@@ -35,9 +35,64 @@
         {% endblock %}
     </main>
 
+
+    <div class="modal fade" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="messageModalLabel">Уведомление</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="messageModalBody">
+                    <!-- Сюда будет вставляться текст сообщения -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
+
+    <!-- Скрипт для показа модального окна -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            {% if messages %}
+            // Получаем первое сообщение
+            {% for message in messages %}
+            const messageText = `{{ message|escapejs }}`;
+            const messageType = '{{ message.tags }}';
+
+            // Устанавливаем текст в модальное окно
+            document.getElementById('messageModalBody').innerHTML = messageText;
+
+            // Меняем стиль в зависимости от типа сообщения
+            const modalContent = document.querySelector('#messageModal .modal-content');
+
+            if (messageType === 'success') {
+                modalContent.classList.add('border-success');
+                document.querySelector('#messageModal .modal-header').classList.add('bg-success', 'text-white');
+            } else if (messageType === 'error') {
+                modalContent.classList.add('border-danger');
+                document.querySelector('#messageModal .modal-header').classList.add('bg-danger', 'text-white');
+            } else if (messageType === 'warning') {
+                modalContent.classList.add('border-warning');
+                document.querySelector('#messageModal .modal-header').classList.add('bg-warning', 'text-dark');
+            } else if (messageType === 'info') {
+                modalContent.classList.add('border-info');
+                document.querySelector('#messageModal .modal-header').classList.add('bg-info', 'text-white');
+            }
+
+            // Показываем модальное окно
+            const messageModal = new bootstrap.Modal(document.getElementById('messageModal'));
+            messageModal.show();
+            {% endfor %}
+            {% endif %}
+        });
+    </script>
 </body>
 
 </html>
