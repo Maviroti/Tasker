@@ -8,9 +8,19 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">{{ task.user_name }}</li>
-        <li class="list-group-item">{{ task.body }}</li>
+        <li class="list-group-item">{{ task.body|linebreaks }}</li>
+        {% if task.get_str_with_all_tags %}
+        <li class="list-group-item">Теги: {{ task.get_str_with_all_tags }}</li>
+        {% endif %}
         <li class="list-group-item">{{ task.end_date }}</li>
     </ul>
+    <a class="btn btn-warning btn-sm" href="{% url 'task_edit' task.id %}" role="button">Изменить</a>
+    <a class="btn btn-danger btn-sm" href="#" data-delete-url="{% url 'task_delete' task.id %}"
+        data-csrf-token="{{ csrf_token }}" data-redirect-url="{% url 'index' %}"
+        onclick="event.preventDefault();if(confirm('Удалить задачу?'))fetch(this.dataset.deleteUrl, {method: 'DELETE',headers: {'X-CSRFToken': this.dataset.csrfToken,'Content-Type': 'application/json'}}).then(() => window.location.replace(this.dataset.redirectUrl))"
+        role="button">
+        Удалить
+    </a>
 </div>
 
 {% endblock %}

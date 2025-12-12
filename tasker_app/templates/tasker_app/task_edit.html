@@ -20,11 +20,11 @@
             {% endif %}
         </div>
         {% endfor %}
-        <button type=" submit" class="btn btn-primary" id="submitBtn" disabled>Сохранить</button>
+        <button type=" submit" class="btn btn-primary" id="submitBtn">Сохранить</button>
     </form>
 </div>
 
-<script>
+<!-- <script>
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('taskForm');
         const submitBtn = document.getElementById('submitBtn');
@@ -37,7 +37,24 @@
             inputs.forEach(input => {
 
                 const originalValue = input.getAttribute('data-original') || '';
-                const currentValue = input.value;
+                let currentValue = input.value;
+
+                // console.log(`input.tagName == `, input.tagName);
+                // Для select полей сравниваем data-original с выбранным текстом
+                if (input.tagName === 'SELECT') {
+
+                    console.log(`input.selectedIndex == `, input.mult);
+                    const selectedOption = input.options[input.selectedIndex];
+                    console.log(`selectedOption == `, selectedOption);
+                    if (selectedOption) {
+                        console.log(`selectedOption.text == `, selectedOption.text);
+
+                        // Сравниваем с текстом выбранной опции
+                        currentValue = selectedOption.text;
+                        console.log(currentValue, ` -- `, originalValue);
+                    }
+                }
+
                 if (currentValue !== originalValue) {
                     hasChanges = true;
                 }
@@ -57,5 +74,5 @@
         checkFormChanges();
 
     });
-</script>
+</script> -->
 {% endblock %}

@@ -1,6 +1,6 @@
 from datetime import date
 from django.contrib import admin
-from .models import User, Task
+from .models import User, Task, Tag
 
 
 @admin.register(User)
@@ -27,3 +27,12 @@ class TaskAdmin(admin.ModelAdmin):
             task.save()
 
     actions = (set_end_date_today,)  # type: ignore
+
+
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    ordering = ("name",)
+    list_filter = ("name",)
+    search_fields = ("name",)
+    search_help_text = "Поиск по имени тега"

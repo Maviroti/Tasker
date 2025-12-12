@@ -50,16 +50,6 @@ class TodayTemplateView(TemplateView):
         return context
 
 
-# def today(request):
-#     """Выводим список задач у которых сегодня последний день"""
-#     today_tasks = Task.get_by_date()
-#     context = {
-#         "active_page": "today",
-#         "tasks": today_tasks,
-#     }
-#     return render(request, "tasker_app/index.html", context=context)
-
-
 class TaskCreateView(CreateView):
     """Представление для формы создания задачи"""
 

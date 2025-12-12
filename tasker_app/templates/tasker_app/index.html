@@ -7,25 +7,24 @@
     <a class="btn btn-success" href="{% url 'add_task_form' %}" role="button">Создать задачу</a>
 </div>
 {% endif %}
-<div class="row">
+<div class="row p-2">
     {% for task in tasks %}
-    <div class="col-sm-6">
-        <div class="card mb-3">
+    <div class="col-sm-4 ">
+        <div class="card mb-3 shadow-sm hover-shadow">
             <div class="card-header bg-transparent">{{task.user_name}}</div>
             <div class="card-body">
-                <h5 class="card-title">{{task.title}}</h5>
-                <p class="card-text">{{task.body}}</p>
+                <h6 class="card-title">
+                    <a href="{% url 'task_detail' task.id %}"
+                        class=" link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover">{{task.title}}</a>
+                </h6>
             </div>
+            {% if task.get_str_with_all_tags %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Теги: {{ task.get_str_with_all_tags }}</li>
+            </ul>
+            {% endif %}
             <div class="card-footer bg-transparent">
                 <span>Срок до: {{task.end_date}}</span>
-                <a class="btn btn-primary btn-sm" href="{% url 'task_detail' task.id %}" role="button">Открыть</a>
-                <a class="btn btn-warning btn-sm" href="{% url 'task_edit' task.id %}" role="button">Изменить</a>
-                <a class="btn btn-danger btn-sm" href="#" data-delete-url="{% url 'task_delete' task.id %}"
-                    data-csrf-token="{{ csrf_token }}"
-                    onclick="event.preventDefault();if(confirm('Удалить задачу?'))fetch(this.dataset.deleteUrl, {method: 'DELETE',headers: {'X-CSRFToken': this.dataset.csrfToken,'Content-Type': 'application/json'}}).then(() => window.location.reload())"
-                    role="button">
-                    Удалить
-                </a>
             </div>
         </div>
     </div>
