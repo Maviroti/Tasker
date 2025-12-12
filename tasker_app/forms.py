@@ -9,6 +9,8 @@ class TaskModelForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = [
+            "task_type",
+            "status",
             "title",
             "user_name",
             "body",
@@ -16,6 +18,8 @@ class TaskModelForm(forms.ModelForm):
             "end_date",
         ]
         labels = {
+            "task_type": "Тип",
+            "status": "Статус",
             "title": "Название",
             "user_name": "Пользователь",
             "body": "Содержание",
@@ -23,6 +27,16 @@ class TaskModelForm(forms.ModelForm):
             "end_date": "Дата окончания задачи",
         }
         widgets = {
+            "task_type": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "status": forms.Select(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
             "title": forms.TextInput(
                 attrs={
                     "class": "form-control",
@@ -54,17 +68,13 @@ class TaskModelForm(forms.ModelForm):
             ),
         }
 
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     # Добавляем data-original атрибут ко всем полям
-    #     for field_name, field in self.fields.items():
-    #         # Добавляем data-original только если есть значение
-    #         if self.instance and self.instance.pk:
-    #             value = getattr(self.instance, field_name)
-    #             if field_name == "end_date" and value:
-    #                 field.widget.attrs["data-original"] = value.strftime("%Y-%m-%d")
-    #             elif value:
-    #                 field.widget.attrs["data-original"] = str(value)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # При создании новой задачи
+        if not self.instance.pk:
+            # Добавляем атрибут disabled к виджету
+            self.fields["status"].widget.attrs["disabled"] = True
 
     def clean_title(self):
         """Валидация title на количество слов"""

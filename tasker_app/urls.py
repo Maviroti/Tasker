@@ -4,6 +4,7 @@ from .views import (
     TaskDetailView,
     TaskUpdateView,
     IndexTemplateView,
+    KanbanTemplateView,
     AboutTemplateView,
     TodayTemplateView,
     TaskCreateView,
@@ -11,6 +12,7 @@ from .views import (
 
 urlpatterns = [
     path("", IndexTemplateView.as_view(), name="index"),
+    path("kanban/", KanbanTemplateView.as_view(), name="kanban"),
     path("about/", AboutTemplateView.as_view(), name="about"),
     path("today/", TodayTemplateView.as_view(), name="today"),
     path("tasks/add/", TaskCreateView.as_view(), name="add_task_form"),

@@ -3,6 +3,18 @@ from datetime import date
 
 
 class Task(models.Model):
+    class TaskType(models.TextChoices):
+        TASK = "task", "Task"
+        BUG = "bug", "Bug"
+        FEATURE = "feature", "Feature"
+        PBI = "pbi", "Product Backlog Item"
+        EPIC = "epic", "Epic"
+
+    class TaskStatus(models.TextChoices):
+        ACTIVE = "active", "Active"
+        CLOSED = "closed", "Closed"
+        NEW = "new", "New"
+
     title = models.CharField(max_length=100)
     user_name = models.ForeignKey(
         "User",
@@ -13,6 +25,19 @@ class Task(models.Model):
     end_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField("Tag", related_name="tasks", blank=True)
+    task_type = models.CharField(
+        max_length=20,
+        choices=TaskType.choices,
+        default=TaskType.TASK,
+        verbose_name="Тип задачи",
+    )
+    status = models.CharField(
+        max_length=20,
+        choices=TaskStatus.choices,
+        default=TaskStatus.NEW,
+        verbose_name="Статус задачи",
+        blank=True,
+    )
 
     def __str__(self):
         return self.title

@@ -26,6 +26,23 @@ class IndexTemplateView(TemplateView):
         return context
 
 
+class KanbanTemplateView(TemplateView):
+    """Представление для канбана"""
+
+    template_name = "tasker_app/kanban.html"
+
+    def get_context_data(self, **kwargs):
+        new_tasks = Task.objects.filter(status=Task.TaskStatus.NEW)
+        active_tasks = Task.objects.filter(status=Task.TaskStatus.ACTIVE)
+        closed_tasks = Task.objects.filter(status=Task.TaskStatus.CLOSED)
+        context = super().get_context_data(**kwargs)
+        context["active_page"] = "index"
+        context["new_tasks"] = new_tasks
+        context["active_tasks"] = active_tasks
+        context["closed_tasks"] = closed_tasks
+        return context
+
+
 class AboutTemplateView(TemplateView):
     """Представление страницы about"""
 

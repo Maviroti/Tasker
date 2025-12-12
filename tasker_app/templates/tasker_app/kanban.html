@@ -1,0 +1,124 @@
+{% extends "tasker_app/base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-3">
+    <h2 class="mb-4">Канбан доска</h2>
+
+    <div class="row">
+        <!-- Столбец NEW -->
+        <div class="col-md-4">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-plus-circle"></i> Новые
+                        <span class="badge bg-light text-dark float-end">{{ new_tasks.count }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-2" id="new-column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    {% for task in new_tasks %}
+                    <div class="card mb-3 shadow-sm hover-shadow">
+                        <div class="card-header bg-transparent">{{task.user_name}}</div>
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <a href="{% url 'task_detail' task.id %}"
+                                    class=" link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover">{{task.title}}</a>
+                            </h6>
+                        </div>
+                        {% if task.get_str_with_all_tags %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Теги: {{ task.get_str_with_all_tags }}</li>
+                        </ul>
+                        {% endif %}
+                        <div class="card-footer bg-transparent">
+                            <span>{{ task.task_type }} | Срок до: {{task.end_date}}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                        <p>Нет задач</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Столбец ACTIVE -->
+        <div class="col-md-4">
+            <div class="card border-warning">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0">
+                        <i class="fas fa-play-circle"></i> В работе
+                        <span class="badge bg-light text-dark float-end">{{ active_tasks.count }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-2" id="active-column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    {% for task in active_tasks %}
+                    <div class="card mb-3 shadow-sm hover-shadow">
+                        <div class="card-header bg-transparent">{{task.user_name}}</div>
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <a href="{% url 'task_detail' task.id %}"
+                                    class=" link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover">{{task.title}}</a>
+                            </h6>
+                        </div>
+                        {% if task.get_str_with_all_tags %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Теги: {{ task.get_str_with_all_tags }}</li>
+                        </ul>
+                        {% endif %}
+                        <div class="card-footer bg-transparent">
+                            <span>{{ task.task_type }} | Срок до: {{task.end_date}}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-cogs fa-2x mb-2"></i>
+                        <p>Нет задач в работе</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Столбец CLOSED -->
+        <div class="col-md-4">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-check-circle"></i> Завершенные
+                        <span class="badge bg-light text-dark float-end">{{ closed_tasks.count }}</span>
+                    </h5>
+                </div>
+                <div class="card-body p-2" id="closed-column" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    {% for task in closed_tasks %}
+                    <div class="card mb-3 shadow-sm hover-shadow">
+                        <div class="card-header bg-transparent">{{task.user_name}}</div>
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <a href="{% url 'task_detail' task.id %}"
+                                    class=" link-dark link-underline link-underline-opacity-0 link-underline-opacity-100-hover">{{task.title}}</a>
+                            </h6>
+                        </div>
+                        {% if task.get_str_with_all_tags %}
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Теги: {{ task.get_str_with_all_tags }}</li>
+                        </ul>
+                        {% endif %}
+                        <div class="card-footer bg-transparent">
+                            <span>{{ task.task_type }} | Срок до: {{task.end_date}}</span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center text-muted py-4">
+                        <i class="fas fa-check fa-2x mb-2"></i>
+                        <p>Нет завершенных задач</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

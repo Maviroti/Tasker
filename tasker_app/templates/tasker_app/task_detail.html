@@ -8,6 +8,7 @@
     </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">{{ task.user_name }}</li>
+        <li class="list-group-item">{{ task.get_task_type_display }} | {{ task.get_status_display }} </li>
         <li class="list-group-item">{{ task.body|linebreaks }}</li>
         {% if task.get_str_with_all_tags %}
         <li class="list-group-item">Теги: {{ task.get_str_with_all_tags }}</li>
