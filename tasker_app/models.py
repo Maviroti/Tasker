@@ -1,9 +1,15 @@
 from django.db import models
 from datetime import date
 
+from user_app.models import CustomUser
+
 
 class Task(models.Model):
+    """Модель задачи"""
+
     class TaskType(models.TextChoices):
+        """Типы задач"""
+
         TASK = "task", "Task"
         BUG = "bug", "Bug"
         FEATURE = "feature", "Feature"
@@ -11,13 +17,15 @@ class Task(models.Model):
         EPIC = "epic", "Epic"
 
     class TaskStatus(models.TextChoices):
+        """Статусы задач"""
+
         ACTIVE = "active", "Active"
         CLOSED = "closed", "Closed"
         NEW = "new", "New"
 
     title = models.CharField(max_length=100)
     user_name = models.ForeignKey(
-        "User",
+        CustomUser,
         on_delete=models.CASCADE,
         related_name="tasks",
     )
@@ -56,14 +64,9 @@ class Task(models.Model):
         return ", ".join(self.get_tags_list())
 
 
-class User(models.Model):
-    full_name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"{self.full_name}"
-
-
 class Tag(models.Model):
+    """Модель тегов для задач"""
+
     name = models.CharField(max_length=50)
 
     def __str__(self):

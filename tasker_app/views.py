@@ -108,3 +108,11 @@ class TaskDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy("index")
+
+    def delete(self, request, *args, **kwargs):
+        user = self.request.user
+        if user.is_staff:
+            return super().delete(request, *args, **kwargs)
+        else:
+            messages.error(self.request, "У вас нет прав на удаление задачи")
+            return reverse_lazy("index")

@@ -80,7 +80,6 @@ class TaskModelForm(forms.ModelForm):
         """Валидация title на количество слов"""
         title: str = str(self.cleaned_data.get("title"))
         words_list = title.split()
-        print(f"validation: {words_list}")
         if len(words_list) < 2:
             raise ValidationError("Название должно содержать минимум 2 слова")
         return title

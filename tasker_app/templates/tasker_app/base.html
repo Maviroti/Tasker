@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 
 <head>
     <meta charset="utf-8" />
@@ -19,18 +19,41 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav dropdown">
-                    <a class="nav-link {% if active_page == 'index' %}active{% endif %} dropdown-toggle"
-                        aria-current="page" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">Доски</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'index' %}">Список</a></li>
-                        <li><a class="dropdown-item" href="{% url 'kanban' %}">Канбан</a></li>
-                    </ul>
+                <div class="navbar-nav">
+                    <div class="dropdown">
+                        <a class="nav-link {% if active_page == 'index' %}active{% endif %} dropdown-toggle"
+                            aria-current="page" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Доски</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'index' %}">Список</a></li>
+                            <li><a class="dropdown-item" href="{% url 'kanban' %}">Канбан</a></li>
+                        </ul>
+                    </div>
                     <a class="nav-link {% if active_page == 'today' %}active{% endif %}"
                         href="{% url 'today' %}">Сегодня</a>
                     <a class="nav-link {% if active_page == 'about' %}active{% endif %}" href="{% url 'about' %}">О
                         нас</a>
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle" aria-current="page" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Личный кабинет</a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated %}
+                            <li><span class="dropdown-item text-muted">{{ user.full_name }}</span></li>
+                            <li>
+                                <form action="{% url 'logout' %}" method="post" class="dropdown-item p-0 m-0">
+                                    {% csrf_token %}
+                                    <button type="submit"
+                                        class="dropdown-item border-0 bg-transparent w-100 text-start">
+                                        Выйти
+                                    </button>
+                                </form>
+                            </li>
+                            {% else %}
+                            <li><a class="dropdown-item" href="{% url 'login' %}">Войти</a></li>
+                            <li><a class="dropdown-item" href="{% url 'register' %}">Зарегистрироваться</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>

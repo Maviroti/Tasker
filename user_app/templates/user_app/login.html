@@ -1,0 +1,15 @@
+{% extends 'tasker_app/base.html' %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<div class="mx-3">
+    <h1>Вход</h1>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Войти</button>
+    </form>
+    <a href="{% url 'register' %}" class="btn btn-secondary mt-3">Нет акаунта? Зарегистрировать</a>
+</div>
+{% endblock %}

@@ -1,19 +1,12 @@
 from datetime import date
 from django.contrib import admin
-from .models import User, Task, Tag
-
-
-@admin.register(User)
-class UserAdmin(admin.ModelAdmin):
-    list_display = ("full_name",)
-    ordering = ("full_name",)
-    list_filter = ("full_name",)
-    search_fields = ("full_name",)
-    search_help_text = "Поиск по имени пользователя"
+from .models import Task, Tag
 
 
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
+    """Админка для задачи"""
+
     list_display = ("title", "user_name", "end_date", "created_at")
     ordering = ("end_date", "title")
     list_filter = ("user_name", "end_date", "created_at")
@@ -31,6 +24,8 @@ class TaskAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
+    """Админка для тега"""
+
     list_display = ("name",)
     ordering = ("name",)
     list_filter = ("name",)
