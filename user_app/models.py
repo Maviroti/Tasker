@@ -35,7 +35,7 @@ class CustomUser(AbstractUser):
         unique=False,
         blank=True,
         null=True,
-        verbose_name="Имя пользователя",
+        verbose_name="Имя пользователя (не обязательное)",
     )
 
     USERNAME_FIELD = "email"
