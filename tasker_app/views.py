@@ -11,6 +11,7 @@ from django.contrib import messages
 
 from tasker_app.forms import TaskModelForm
 from tasker_app.models import Task
+from tasker_app.tasks import log_new_task
 
 
 class IndexTemplateView(TemplateView):
@@ -79,8 +80,13 @@ class TaskCreateView(CreateView):
 
     def form_valid(self, form):
         """Добавляем сообщение об успешном создании задачи."""
+        response = super().form_valid(form)
         messages.success(self.request, "Пост успешно создан")
-        return super().form_valid(form)
+
+        # логируем в консоль результат задачи celery
+        task_result = log_new_task.delay(str(self.object.title))  # type: ignore
+        print(task_result.get())
+        return response
 
 
 class TaskDetailView(DetailView):

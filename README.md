@@ -34,3 +34,19 @@ python manage.py migrate
 # Запуск сервера
 python manage.py runserver
 ```
+
+## Celery workers
+
+Реализована задача по логированию новых задач в консоль
+
+### Запуск workers
+
+```bash
+celery -A config worker --loglevel=info
+```
+
+для Windows
+
+```powershell
+celery -A config worker --loglevel=info --pool=solo
+```

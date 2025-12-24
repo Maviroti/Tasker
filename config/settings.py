@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "tasker_app.apps.TaskerAppConfig",
     "user_app.apps.UserAppConfig",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 AUTH_USER_MODEL = "user_app.CustomUser"
+
+
+# Настроки CELERY
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "django-db"
+CEELERY_TASK_IGNORE_RESULT = False
