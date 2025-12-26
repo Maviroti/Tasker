@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.views.generic import FormView, RedirectView, TemplateView
+from django.views.generic import FormView
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView

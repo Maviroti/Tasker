@@ -1,0 +1,15 @@
+[DESIGN]
+ignored-classes=Meta
+max-parents=10
+
+[MAIN]
+ignore-paths=user_app/migrations/,
+        tasker_app/migrations/
+
+disable=E1101, #  Dynamic attributes
+        W0613, #  unused argument
+
+[MESSAGES CONTROL]
+disable=too-few-public-methods,
+        import-outside-toplevel,
+        missing-module-docstring

@@ -2,4 +2,6 @@ from django.apps import AppConfig
 
 
 class UserAppConfig(AppConfig):
-    name = 'user_app'
+    """Класс для конфигурации приложения"""
+
+    name = "user_app"

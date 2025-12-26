@@ -1,12 +1,14 @@
 from django import forms
-from tasker_app.models import Task
 from django.core.exceptions import ValidationError
+from tasker_app.models import Task
 
 
 class TaskModelForm(forms.ModelForm):
     """Форма для модели Task"""
 
     class Meta:
+        """Класс для настройки формы"""
+
         model = Task
         fields = [
             "task_type",

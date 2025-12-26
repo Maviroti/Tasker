@@ -31,6 +31,8 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     class Meta:
+        """Класс для настройки формы"""
+
         model = get_user_model()
         fields = ["email", "full_name"]
         widgets = {
@@ -42,9 +44,10 @@ class CustomUserCreationForm(UserCreationForm):
         }
 
     def clean_email(self):
-        email = self.cleaned_data.get("email").lower()
-        User = get_user_model()
-        if User.objects.filter(email=email).exists():
+        """Валидация email"""
+        email = self.cleaned_data.get("email").lower()  # type: ignore
+        user = get_user_model()
+        if user.objects.filter(email=email).exists():
             raise forms.ValidationError("Этот email уже занят")
         return email
 
@@ -68,5 +71,6 @@ class CustomAuthenticationForm(AuthenticationForm):
     )
 
     def clean_username(self):
-        username = self.cleaned_data.get("username").lower()
+        """Валидация username"""
+        username = self.cleaned_data.get("username").lower()  # type: ignore
         return username

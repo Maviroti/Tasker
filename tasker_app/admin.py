@@ -15,6 +15,7 @@ class TaskAdmin(admin.ModelAdmin):
 
     @admin.action(description='Сделать дату окончания "Сегодня"')
     def set_end_date_today(self, request, queryset):
+        """Сделать дату окончания "Сегодня" для выбранных задач"""
         for task in queryset:
             task.end_date = date.today()
             task.save()

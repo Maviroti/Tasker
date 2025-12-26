@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -119,6 +118,5 @@ class TaskDeleteView(DeleteView):
         user = self.request.user
         if user.is_staff:
             return super().delete(request, *args, **kwargs)
-        else:
-            messages.error(self.request, "У вас нет прав на удаление задачи")
-            return reverse_lazy("index")
+        messages.error(self.request, "У вас нет прав на удаление задачи")
+        return reverse_lazy("index")

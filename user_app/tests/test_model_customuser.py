@@ -122,7 +122,7 @@ class TestCustomUser:
         assert CustomUser.USERNAME_FIELD == "email"
 
         # Проверяем, что REQUIRED_FIELDS пуст
-        assert CustomUser.REQUIRED_FIELDS == []
+        assert not CustomUser.REQUIRED_FIELDS
 
     def test_password_hashing(self):
         """Тест хеширования пароля"""

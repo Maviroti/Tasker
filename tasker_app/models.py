@@ -1,5 +1,5 @@
-from django.db import models
 from datetime import date
+from django.db import models
 
 from user_app.models import CustomUser
 
@@ -48,7 +48,7 @@ class Task(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
     @classmethod
     def get_by_date(cls, target_date: date = date.today()):
@@ -70,4 +70,4 @@ class Tag(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        return str(self.name)

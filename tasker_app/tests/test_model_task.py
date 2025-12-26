@@ -1,5 +1,5 @@
-import pytest
 from datetime import date, timedelta
+import pytest
 
 from tasker_app.models import Task, Tag
 from user_app.models import CustomUser

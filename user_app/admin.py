@@ -4,4 +4,4 @@ from user_app.models import CustomUser
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
-    pass
+    """Админка для управления пользователями"""
